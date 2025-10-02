@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite para Sair - Milena</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #btnSim {
+            background: linear-gradient(to right, #4a90e2, #7bb8f0);
+            color: white;
+        }
+
+        #btnNao {
+            background: #f8f9fa;
+            color: #555;
+            border: 2px solid #dee2e6;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #btnSim:hover {
+            background: linear-gradient(to right, #357abd, #5aa7e0);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon {
+            font-size: 3rem;
+            color: #4a90e2;
+            margin: 20px 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Convite para Sair</h1>
+        
+        <div id="convite">
+            <p>Olá Milena esnobe! 🙃</p>
+            
+            <p>Então você a gente só cvs no curso ou no serviçoe olha la ainda, aa seria da hora passar tempo para isso tudo e cvs com vc.</p>
+            
+            <p>Que tal sairmos juntos? Comer Pizza ou tomar açai deixo você escolher</p>
+            
+            <p>Se voce nao quiser tudo bem né 😕</p>
+            
+            <p>O que você acha?</p>
+            
+            <div class="buttons">
+                <button id="btnSim">Sim, bora!</button>
+                <button id="btnNao">Talvez depois</button>
+            </div>
+        </div>
+        
+        <div id="respostaSim" class="hidden">
+            <div class="icon">🎉</div>
+            <h2>Ótimo! 😄</h2>
+            <p class="message">Que legal que você topou! Vamos combinar os detalhes em breve.</p>
+            <p>Vai ser divertido!</p>
+            <button id="btnVoltar">Voltar</button>
+        </div>
+        
+        <div id="respostaNao" class="hidden">
+            <div class="icon">😊</div>
+            <h2>Sem problemas!</h2>
+            <p class="message">Tudo bem, entendo. Quem sabe em outra hora!</p>
+            <p>De qualquer jeito, a amizade continua top!</p>
+            <button id="btnVoltarNao">Voltar</button>
+        </div>
+        
+        <footer>
+            Feito especialmente para você
+        </footer>
+    </div>
+
+    <script>
+        // Manipuladores de botões
+        document.getElementById('btnSim').addEventListener('click', function() {
+            document.getElementById('convite').classList.add('hidden');
+            document.getElementById('respostaSim').classList.remove('hidden');
+        });
+
+        document.getElementById('btnNao').addEventListener('click', function() {
+            // Efeito divertido para o botão "Não" (se move um pouco)
+            this.style.position = 'relative';
+            const moveX = Math.random() * 50 - 25;
+            const moveY = Math.random() * 50 - 25;
+            this.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            
+            // Após duas tentativas, mostra a resposta
+            let attempts = parseInt(this.getAttribute('data-attempts') || '0');
+            attempts++;
+            this.setAttribute('data-attempts', attempts);
+            
+            if (attempts >= 2) {
+                document.getElementById('convite').classList.add('hidden');
+                document.getElementById('respostaNao').classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('btnVoltar').addEventListener('click', function() {
+            document.getElementById('respostaSim').classList.add('hidden');
+            document.getElementById('convite').classList.remove('hidden');
+        });
+
+        document.getElementById('btnVoltarNao').addEventListener('click', function() {
+            document.getElementById('respostaNao').classList.add('hidden');
+            document.getElementById('convite').classList.remove('hidden');
+            document.getElementById('btnNao').removeAttribute('data-attempts');
+            document.getElementById('btnNao').style.transform = '';
+        });
+    </script>
+</body>
+</html>
